@@ -2,7 +2,6 @@ from flask import Flask
 from flask import request
 from flask import abort
 import get_news as news
-import json
 
 
 def say_hello(username = "World"):
@@ -11,13 +10,12 @@ def say_hello(username = "World"):
 
 def get_news():
     category = request.args.get('category')
-    if category == 'technology':
-        return news.getTechnologyNews()
-    elif category == 'business':
-        return news.getBusinessNews()
+    language = request.args.get("lang")
+    if category == 'technology' or category == "business" or category == "entertainment"\
+            or category == "general" or category == "health" or category == "science" or category == "sports":
+        return news.get_news(category, country='us')
     else:
         abort(404)
-
 
 
 header_text = '''
