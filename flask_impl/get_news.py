@@ -6,8 +6,8 @@ import json
 import model
 
 
-apiKey1 = 'ee943d29e158445a94e6287b6d65ab2a'
-apiKey2 = '6735c00583ed4884a7f21bbbdae236ef'
+apiKey1 = '**************************'
+apiKey2 = '************************'
 
 newsapi = NewsApiClient(api_key=apiKey2)
 
