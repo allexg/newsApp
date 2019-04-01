@@ -1,11 +1,10 @@
 import boto3
 
-translate = boto3.client(service_name='translate', region_name='region', use_ssl=True,
-                    aws_access_key_id="******************************",
-                    aws_secret_access_key="************************")
+def translate_text(text, language):
+    translate = boto3.client(service_name='translate', region_name='eu-central-1', use_ssl=True,
+                        aws_access_key_id="******************",
+                        aws_secret_access_key="***********************")
+    result = translate.translate_text(Text=text,
+                SourceLanguageCode="en", TargetLanguageCode=language)
+    return result.get('TranslatedText')
 
-result = translate.translate_text(Text="Hello, World",
-            SourceLanguageCode="en", TargetLanguageCode="de")
-print('TranslatedText: ' + result.get('TranslatedText'))
-print('SourceLanguageCode: ' + result.get('SourceLanguageCode'))
-print('TargetLanguageCode: ' + result.get('TargetLanguageCode'))
