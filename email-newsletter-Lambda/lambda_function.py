@@ -1,7 +1,7 @@
 import boto3
 from botocore.exceptions import ClientError
-from boto3.dynamodb.conditions import Attr
-from datetime import datetime, timedelta
+import json
+from botocore.vendored import requests
 
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1', endpoint_url="https://dynamodb.us-east-1.amazonaws.com")
 subscriptions_table = dynamodb.Table('test')
@@ -11,11 +11,12 @@ SUBJECT = "newsApp - newsletter"
 CHARSET = "UTF-8"
 
 def handler(json_input, context):
-    news = []
     #get all subscribers
     subscribers = subscriptions_table.scan(
         AttributesToGet=['email']
     )
+    # get news
+    news = get_news()
     #send a newsletter to each subscriber
     print(len(subscribers['Items']))
     for subscriber in subscribers['Items']:
@@ -24,7 +25,7 @@ def handler(json_input, context):
 
 def send_newsletter_report_to_address(email_address, news):
     global AWS_REGION, SUBJECT, CHARSET
-    body_html, body_text = compose_weekly_report_body(news)
+    body_html, body_text = compose_report_body(news)
     client = boto3.client('ses', region_name=AWS_REGION)
     try:
         response = client.send_email(
@@ -59,7 +60,26 @@ def send_newsletter_report_to_address(email_address, news):
 
 
 #receives news, returns the html body of the email message to be sent (and the text body, for non-HTML email clients)
-def compose_weekly_report_body(news):
-    text_body = "text - test from newsApp team"
-    html_body = "html - test from newsApp team"
+def compose_report_body(news):
+    text_body = "text"
+    html_body = """<html>
+    <head>
+        <style>
+        </style>
+    </head>
+    <body>
+      <h3>newsApp - newsletter</h3>
+      <p>Most recent news:</p>
+      """
+    for article in news:
+        html_body += "<h1>" + article['title'] + "</h1><small>Publish date: " + \
+        article['publishDate'] + "</small><br><a href=" + article['link'] + ">go to article</a><h3>" + article['summary'] + \
+            "</h3><p>" + article['content'] + "</p>"
+    html_body += "</body></html>"
     return html_body, text_body
+
+
+def get_news():
+    url = 'http://demo0051741.mockable.io/'
+    r = requests.get(url)
+    return json.loads(r.text)
