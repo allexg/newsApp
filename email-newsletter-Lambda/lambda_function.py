@@ -73,13 +73,13 @@ def compose_report_body(news):
       """
     for article in news:
         html_body += "<h1>" + article['title'] + "</h1><small>Publish date: " + \
-        article['publishDate'] + "</small><br><a href=" + article['link'] + ">go to article</a><h3>" + article['summary'] + \
+        article['publishedDate'] + "</small><br><a href=" + article['link'] + ">go to article</a><h3>" + article['summary'] + \
             "</h3><p>" + article['content'] + "</p>"
     html_body += "</body></html>"
     return html_body, text_body
 
 
 def get_news():
-    url = 'http://demo0051741.mockable.io/'
+    url = 'http://demo6876887.mockable.io/'
     r = requests.get(url)
     return json.loads(r.text)
