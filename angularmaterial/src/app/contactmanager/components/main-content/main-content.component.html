@@ -1,0 +1,36 @@
+<div *ngIf="!news">
+  <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="news">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h2>{{ news.title }}</h2>
+      </mat-card-title>
+      <mat-card-subtitle>
+        PublishDate {{ news.publishDate | date:'fullDate' }}
+      </mat-card-subtitle>
+      <mat-card-subtitle>
+
+      </mat-card-subtitle>
+      <mat-card-subtitle>
+        <a href ={{news.link}}>Link for full article </a>
+      </mat-card-subtitle>
+
+    </mat-card-header>
+    <mat-card-content>
+      <mat-tab-group>
+        <mat-tab label="Full Content">
+          <p>
+              {{news.content}}
+          </p>
+        </mat-tab>
+        <mat-tab label="Summary">
+          <p>
+            {{news.summary}}
+          </p>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>
