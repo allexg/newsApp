@@ -80,6 +80,6 @@ def compose_report_body(news):
 
 
 def get_news():
-    url = 'http://demo6876887.mockable.io/'
+    url = 'http://newsapp.syvh7ndmiz.eu-central-1.elasticbeanstalk.com/news'
     r = requests.get(url)
     return json.loads(r.text)
