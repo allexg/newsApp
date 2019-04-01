@@ -11,7 +11,7 @@ apiKey2 = 'ee943d29e158445a94e6287b6d65ab2a'
 
 newsapi = NewsApiClient(api_key=apiKey2)
 
-def get_news(category, country):
+def get_news(category, country,language):
     news_list = []
     top_headlines = newsapi.get_top_headlines(category=category, country=country, page_size=100)
     for headline in top_headlines['articles']:
